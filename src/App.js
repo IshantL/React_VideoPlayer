@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import VideoList from './Video_List';
+import YTSearch from 'youtube-api-search';
 
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      videos:[]
+    }
+    YTSearch({key:API_KEY,term:'Bahubali'},(videos)=>{
+      console.log(videos);
+      this.setState({videos});
+      console.log("videos"+this.state.videos);
+    })
+  }
   render() {
     return (
       <div className="App">
@@ -11,9 +25,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <VideoList videos={this.state.videos}/>
       </div>
     );
   }
