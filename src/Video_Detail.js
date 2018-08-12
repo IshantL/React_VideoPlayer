@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+const VideoDetail= ({video})=>{
+  if(!video){
+    return<div>Loading..</div>
   }
+const videoId = video.id.videoId;
+const url=`https://www.youtube.com/embed/${videoId}`;
+
+return(
+<div>
+<div>
+<iframe src={url}></iframe>
+</div>
+<div>
+<div>{video.snippet.title}</div>
+<div>{video.snippet.description}</div>
+</div>
+</div>
+  )
+
 }
 
-export default App;
+export default VideoDetail;
