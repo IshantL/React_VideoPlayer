@@ -1,10 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import SearchBar from './Search_bar';
 import YTSearch from 'youtube-api-search';
 import VideoList from './Video_List';
 import VideoDetail from './Video_Detail';
+
 
 class App extends Component {
 
@@ -15,22 +16,25 @@ class App extends Component {
       videos:[],
       selectedVideo:''
     }
-    YTSearch({key:API_KEY,term:'Bahubali'},(videos)=>{
+    this.videoSearch('Science');
+  }
+
+  videoSearch(term){
+      YTSearch({key:API_KEY,term:term},(videos)=>{
       console.log(videos);
       this.setState({videos});
       this.setState({selectedVideo:videos[0]})
-      console.log("videos"+this.state.videos);
+
     })
   }
   render() {
-    console.log(this.state.videos);
+
+    const videoSearch=_.debounce((term)=>{this.videoSearch(term)},300);
     return (
       <div >
+      <SearchBar onVideoSearch={videoSearch}/>
       <VideoDetail video={this.state.selectedVideo}/>
-
-      <VideoList onVideoSelect={(selectedVideo)=>this.setState({selectedVideo})}
-
-        videos={this.state.videos}/>
+      <VideoList onVideoSelect={(selectedVideo)=>this.setState({selectedVideo})} videos={this.state.videos}/>
       </div>
     );
   }
