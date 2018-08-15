@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
+import React,{Component} from 'react';
 
+class SearchBar extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			term:''
+		}
+	}
 
-class SearchBar extends Component {
+	onInputChange(term){
+		this.setState({term});
+		this.props.onVideoSearch(term);
+	}
 
-  constructor(props){
-    super(props);
-    this.state={
-      term:''
-    }
-  }
+	render(){
+		console.log(this.props.onVideoSearch);
+		return(
+			<div>
+			<input onChange={(event)=>this.onInputChange(event.target.value)}/>
 
-  
-  render() {
-    return (
-      <div >
-      
-      </div>
-    );
-  }
+			</div>
+			)
+	}
+
 }
 
 export default SearchBar;
+
